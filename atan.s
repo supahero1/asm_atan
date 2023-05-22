@@ -25,16 +25,14 @@ asm_atan:
 	comiss	xmm1, xmm2	; fabs(x) < c1
 	jb	less		; less likely
 
-	movaps	xmm1, xmm0
-	andps	xmm1, [rel mask]; upper bit either 0 or 1
-
 	movaps	xmm2, [rel c2]
 	mulss	xmm2, xmm0	; x * c2
 	rcpss	xmm2, xmm2	; 1 / (x * c2)
 	addss	xmm2, xmm0	; x + 1 / (x * c2)
 	rcpss	xmm2, xmm2	; 1 / (x + 1 / (x * c2))
 
-	movaps	xmm0, [rel c4_pi]
+	movaps	xmm1, [rel c4_pi]
+	andps	xmm0, [rel mask]; upper bit either 0 or 1
 	orps	xmm0, xmm1	; PI/2 or -PI/2
 
 	subss	xmm0, xmm2
