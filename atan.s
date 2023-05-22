@@ -22,7 +22,7 @@ global asm_atan
 asm_atan:
 	movss	xmm1, xmm0
 	andps	xmm1, [rel mask_abs]	; fabs(x)
-	movss	xmm2, dword[rel c1]
+	movss	xmm2, [rel c1]
 	comiss	xmm1, xmm2		; fabs(x) < c1
 	jb	less			; less likely
 
@@ -32,7 +32,7 @@ asm_atan:
 	addss	xmm2, xmm0		; x + 1 / (x * c2)
 	rcpss	xmm2, xmm2		; 1 / (x + 1 / (x * c2))
 
-	movss	xmm1, dword[rel c4_pi]
+	movss	xmm1, [rel c4_pi]
 	andps	xmm0, [rel mask_sgn]	; upper bit either 0 or 1
 	orps	xmm0, xmm1		; PI/2 or -PI/2
 
